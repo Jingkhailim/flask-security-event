@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    
+    {{ user.username}}
+    {{ user.password_hash}}
+    
+    {{ user.user_id}}
+    {{ user.username | capitalize }}
+{% endblock %}
