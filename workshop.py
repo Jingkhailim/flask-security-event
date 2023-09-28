@@ -65,7 +65,9 @@ def register():
         elif password != confirmation:
             flash("Passwords don't match")
             return render_template("register.html")
-
+        elif len(password) < 8 or len(password) > 20 or not any(char.isdigit() for char in password) or not any(char.isupper() for char in password) or not any(char.islower() for char in password):
+            flash("New password must be between 8 to 20 characters, contain at least one uppercase letter, one lowercase letter and one digit.", "error")
+            return render_template("change_password.html")
         # Check if the username is already taken
         user_exists = User.query.filter_by(username=username).first()
         if user_exists:
