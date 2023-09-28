@@ -20,7 +20,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy()
 
 db.init_app(app)
-
+myctx = CryptContext(schemes=["sha256_crypt", "md5_crypt", "des_crypt"])
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -72,7 +72,7 @@ def register():
             flash("Username already taken")
             return render_template("register.html")
         # Hash the password
-        myctx = CryptContext(schemes=["sha256_crypt", "md5_crypt", "des_crypt"])
+
         password_hash = myctx.hash(password)
 
         # Create a new user and add it to the database
@@ -116,7 +116,7 @@ def login():
             return render_template("login.html")
 
         # Check if the user exists and the password is correct
-        myctx = CryptContext(schemes=["sha256_crypt", "md5_crypt", "des_crypt"])
+
         print(myctx.verify(password,user.password_hash))
         print(user.password_hash)
         if user is None or not myctx.verify(password,user.password_hash):
@@ -142,7 +142,7 @@ def change_password():
         old_password = request.form.get("old_password")
         new_password = request.form.get("new_password")
         confirm_password = request.form.get("confirm_password")
-        myctx = CryptContext(schemes=["sha256_crypt", "md5_crypt", "des_crypt"])
+        
         if not myctx.verify(old_password,user.password_hash):
             flash("Incorrect old password. Please try again.", "error")
             return render_template("change_password.html")
