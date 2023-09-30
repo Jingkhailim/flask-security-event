@@ -5,16 +5,16 @@ from passlib.context import CryptContext
 import os
 from functools import wraps
 from pytube import YouTube
-from flask_turnstile import Turnstile
+# from flask_turnstile import Turnstile
 
 persistent_path = os.getenv("PERSISTENT_STORAGE_DIR", os.path.dirname(os.path.realpath(__file__)))
 
 app = Flask(__name__)
 app.secret_key = 'totally_secret_key'
 db_path = os.path.join(persistent_path, "sqlite.db")
-turnstile = Turnstile(app=app, site_key='0x4AAAAAAAKx8g5dcqepg6zf', secret_key='0x4AAAAAAAKx8th8Hf53CIfuTRAtOoJC0W8',
-                      is_enabled=True)
-turnstile.init_app(app)
+# turnstile = Turnstile(app=app, site_key='0x4AAAAAAAKx8g5dcqepg6zf', secret_key='0x4AAAAAAAKx8th8Hf53CIfuTRAtOoJC0W8',
+#                       is_enabled=True)
+# turnstile.init_app(app)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{db_path}'
 app.config["SQLALCHEMY_ECHO"] = False
@@ -60,6 +60,8 @@ def main():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    session.clear()
+    
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -112,12 +114,12 @@ def login():
     session.clear()
 
     if request.method == "POST":
-        if turnstile.verify():
-            pass
-        else:
+        # if turnstile.verify():
+        #     pass
+        # else:
 
-            flash("Too many login attempts. Please try again later.", "error")
-            return render_template("login.html")
+        #     flash("Too many login attempts. Please try again later.", "error")
+        #     return render_template("login.html")
         username = request.form.get("username")
         password = request.form.get("password")
 

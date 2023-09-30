@@ -6,9 +6,9 @@
 
 {% block main %}
     
-    {{ user.username}}
-    {{ user.password_hash}}
-    
-    {{ user.user_id}}
-    {{ user.username | capitalize }}
+    <div class="h3">Welcome to the index page!</div>
+    <br>
+    You have successfully logged in as {{ user.username}} <br>
+    <!-- {{ user.username | capitalize }} -->
+    Your password is hashed as {{ user.password_hash}}
 {% endblock %}
