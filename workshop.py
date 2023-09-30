@@ -155,6 +155,7 @@ def login():
 
 
 @app.route("/change_password", methods=["GET", "POST"])
+@login_required
 def change_password():
     # Implement your own authentication logic here
 
