@@ -12,6 +12,9 @@ persistent_path = os.getenv("PERSISTENT_STORAGE_DIR", os.path.dirname(os.path.re
 app = Flask(__name__)
 app.secret_key = 'totally_secret_key'
 db_path = os.path.join(persistent_path, "sqlite.db")
+# Replace with your site_key, secret_key. 
+# Ensure that whenever you host your application, go to https://dash.cloudflare.com/ turnstile to register your site and get your site_key and secret_key and specify your IP address
+# If you are running locally, please specify 127.0.0.1 as your IP address
 # turnstile = Turnstile(app=app, site_key='0x4AAAAAAAKx8g5dcqepg6zf', secret_key='0x4AAAAAAAKx8th8Hf53CIfuTRAtOoJC0W8',
 #                       is_enabled=True)
 # turnstile.init_app(app)
@@ -114,6 +117,7 @@ def login():
     session.clear()
 
     if request.method == "POST":
+        #Comment this out if you will be using recaptcha
         # if turnstile.verify():
         #     pass
         # else:
