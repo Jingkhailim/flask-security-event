@@ -5,12 +5,16 @@ from passlib.context import CryptContext
 import os
 from functools import wraps
 from pytube import YouTube
+import datetime
 # from flask_turnstile import Turnstile
 
 persistent_path = os.getenv("PERSISTENT_STORAGE_DIR", os.path.dirname(os.path.realpath(__file__)))
 
 app = Flask(__name__)
 app.secret_key = 'totally_secret_key'
+
+app.permanent_session_lifetime = datetime.timedelta(hours=1)
+app.config['session_permanent'] = True
 db_path = os.path.join(persistent_path, "sqlite.db")
 # Replace with your site_key, secret_key. 
 # Ensure that whenever you host your application, go to https://dash.cloudflare.com/ turnstile to register your site and get your site_key and secret_key and specify your IP address
